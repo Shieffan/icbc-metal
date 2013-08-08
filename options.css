@@ -47,7 +47,7 @@ div.gold{
 	margin-bottom:15px;
 }
 table {
-	margin-bottom: 10px;
+	margin-bottom:10px;
 	border: 1px solid #cdcdcd;
 	border-width: 1px 0px 0px 1px;
 	table-layout: fixed;
@@ -56,7 +56,7 @@ table {
 td {
 	white-space: nowrap;
 	background: #fff;
-	padding: 7px 15px;
+	padding: 6px 15px 5px 15px;
 	color: #000;
 	font-size: 12px;
 	line-height: 24px;
@@ -81,6 +81,7 @@ div.action{
 	border-left: 7px solid rgb(235, 90, 53);
 	clear: both;
 	margin-bottom:10px;
+	margin-top:5px;
 }
 
 button{

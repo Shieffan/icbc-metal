@@ -114,8 +114,265 @@ chrome.notifications.onButtonClicked.addListener(function(notID,index) {
     chrome.tabs.create({ url: detailURL });
 });
 
+function checkTime(i)
+{
+	if (i<10) 
+	  {i="0" + i}
+	return i
+}
+function getCurtime(){
+	var d = new Date();
+	return checkTime(d.getHours())+":"+checkTime(d.getMinutes())+":"+checkTime(d.getSeconds());
+}
+	
+
+function produceNotification(data){
+	var type = data.type;
+	var metal_kind = data.kind;
+	var cur_price = data.price;
+	var cur_range = data.range;
+
+	var messages = [];
+	
+	var time = getCurtime();
+	var item = {};
+	var time = getCurtime();
+	if(type == "silver" && localStorage["silver"]){
+		var silverArr = JSON.parse(localStorage["silver"]);
+		if(metal_kind == "paper"){
+			var arr = $.grep(silverArr, function (obj) { return obj.kind == "paper-silver"; });
+		}else{
+			var arr = $.grep(silverArr, function (obj) { return obj.kind == "spot-silver"; });	
+		}
+		
+		if(arr.length>=1){
+			for(var i=0;i<arr.length;i++){
+				var obj = arr[i];
+				if(!obj) continue;
+				if(obj.type=="price"){
+					var direction = obj.direction;
+					var deal = obj.deal;
+					var price = parseFloat(obj.price);
+					if(direction == "gt"){
+						if(deal == "in"){
+							if(cur_price-getSilverSpread() >= price){
+								item = {title: '['+time+'] 纸白银价格提醒',message:'纸白银的银行买入价格￥'+(cur_price-getSilverSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}
+						else if(deal=="out"){
+							if(cur_price+getSilverSpread() >= price){
+								item = {title:'['+time+'] 纸白银价格提醒',message:'纸白银的银行卖出价格￥'+(cur_price+getSilverSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}
+						else{
+							if(cur_price >= price){
+								item = {title:'['+time+'] 现货白银价格提醒',message:'现货白银的成交价格$'+cur_price.toFixed(2)+' 已经到达了您所设置的提醒价格$'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}
+					}
+					else{
+						if(deal == "in"){
+							if(cur_price-getSilverSpread() <= price){
+								item = {title:'['+time+'] 纸白银价格提醒',message:'纸白银的银行买入价格￥'+(cur_price-getSilverSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}else if(deal == "out"){
+							if(cur_price+getSilverSpread() <= price){
+								item = {title:'['+time+'] 纸白银价格提醒',message:'纸白银的银行卖出价格￥'+(cur_price+getSilverSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}else{
+							if(cur_price <= price){
+								item = {title:'['+time+'] 现货白银价格提醒',message:'现货白银的成交价格$'+cur_price.toFixed(2)+' 已经到达了您所设置的提醒价格$'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}
+					}
+				}
+				else{
+					var trend = obj.trend;
+					var range = parseFloat(obj.range);
+					var kind = obj.kind;
+					if(trend=="inc"){
+						if(cur_range > 0  && cur_range >= range){
+							if(kind == "paper-silver"){
+								item = {title: '['+time+'] 纸白银涨幅预警',message:'纸白银的涨幅 '+cur_range.toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) +"%."};
+							}else{
+								item = {title: '['+time+'] 现货白银涨幅预警',message:'现货白银的涨幅 '+cur_range.toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) +"%."};
+							}
+							messages.push(item);
+							delete arr[i];
+						}
+					}
+					else{
+						if(cur_range < 0 && Math.abs(cur_range) >= range){
+							if(kind == "paper-silver"){
+								item = {title: '['+time+'] 纸白银跌幅预警',message:'纸白银的跌幅 '+ Math.abs(cur_range).toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) +"%."};
+							}else{
+								item = {title: '['+time+'] 现货白银跌幅预警',message:'现货白银的跌幅 '+ Math.abs(cur_range).toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) +"%."};
+							}
+							messages.push(item);
+							delete arr[i];
+						}
+
+					}
+				}
+			}
+			var newarr = [];
+			
+			for(var i=0;i<arr.length;i++){
+				obj = arr[i];
+				if(obj){
+					newarr.push(obj);
+				}
+			}
+
+			localStorage["silver"] = JSON.stringify(newarr);
+		}
+
+	}
+	else{
+		var goldArr = JSON.parse(localStorage["gold"]);
+		if(metal_kind == "paper"){
+			var arr = $.grep(goldArr, function (obj) { return obj.kind == "paper-gold"; });
+		}else{
+			var arr = $.grep(goldArr, function (obj) { return obj.kind == "spot-gold"; });	
+		}
+
+		if(arr.length>=1){
+			for(var i=0;i<arr.length;i++){
+				var obj = arr[i];
+				if(!obj) continue;
+				if(obj.type=="price"){
+					var direction = obj.direction;
+					var deal = obj.deal;
+					var price = parseFloat(obj.price);
+					if(direction == "gt"){
+						if(deal == "in"){
+							if(cur_price-getGoldSpread() >= price){
+								item = {title: '['+time+'] 纸黄金价格提醒',message:'纸黄金的银行买入价格￥'+(cur_price-getGoldSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}
+						else if(deal=="out"){
+							if(cur_price+getGoldSpread() >= price){
+								item = {title:'['+time+'] 纸黄金价格提醒',message:'纸黄金的银行卖出价格￥'+(cur_price+getGoldSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}
+						else{
+							if(cur_price >= price){
+								item = {title:'['+time+'] 现货黄金价格提醒',message:'现货黄金的成交价格$'+cur_price.toFixed(2)+' 已经到达了您所设置的提醒价格$'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}
+					}
+					else{
+						if(deal == "in"){
+							if(cur_price-getGoldSpread() <= price){
+								item = {title:'['+time+'] 纸黄金价格提醒',message:'纸黄金的银行买入价格￥'+(cur_price-getGoldSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}else if(deal == "out"){
+							if(cur_price+getGoldSpread() <= price){
+								item = {title:'['+time+'] 纸黄金价格提醒',message:'纸黄金的银行卖出价格￥'+(cur_price+getGoldSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}else{
+							if(cur_price <= price){
+								item = {title:'['+time+'] 现货黄金价格提醒',message:'现货黄金的成交价格$'+cur_price.toFixed(2)+' 已经到达了您所设置的提醒价格$'+price};
+								messages.push(item);
+								delete arr[i];
+							}
+						}
+					}
+				}
+				else{
+					var trend = obj.trend;
+					var range = parseFloat(obj.range);
+					var kind = obj.kind;
+					if(trend=="inc"){
+						if(cur_range > 0  && cur_range >= range){
+							if(kind == "paper-gold"){
+								item = {title: '['+time+'] 纸黄金涨幅预警',message:'纸黄金的涨幅 '+cur_range.toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) +"%."};
+							}else{
+								item = {title: '['+time+'] 现货黄金涨幅预警',message:'现货黄金的涨幅 '+cur_range.toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) +"%."};
+							}
+							messages.push(item);
+							delete arr[i];
+						}
+					}
+					else{
+						if(cur_range < 0 && Math.abs(cur_range) >= range){
+							if(kind == "paper-gold"){
+								item = {title: '['+time+'] 纸黄金跌幅预警',message:'纸黄金的跌幅 '+ Math.abs(cur_range).toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) +"%."};
+							}else{
+								item = {title: '['+time+'] 现货黄金跌幅预警',message:'现货黄金的跌幅 '+ Math.abs(cur_range).toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) +"%."};
+							}
+							messages.push(item);
+							delete arr[i];
+						}
+
+					}
+				}
+			}
+			var newarr = [];
+			
+			for(var i=0;i<arr.length;i++){
+				obj = arr[i];
+				if(obj){
+					newarr.push(obj);
+				}
+			}
+
+			localStorage["gold"] = JSON.stringify(newarr);
+		}
+
+	}
+
+	if(messages.length){
+		var opt={};
+		for(var i=0;i<messages.length;i++){
+			var opt = {
+					type : "basic",
+					title: messages[i].title,
+					message: messages[i].message,
+					iconUrl:"not.png",
+					buttons: [{ title:'查看实时行情', iconUrl: 'link.png'}],
+				}
+		
+			chrome.notifications.create("metal_price_"+metal_kind+i+$.now(), opt, function(notID){
+				
+				setTimeout(function(){
+					chrome.notifications.clear(notID,function(res){
+						
+					});
+				},12000)
+			});	
+		}
+		
+	}
+
+}
+
+
 setInterval(function(){
- $.ajax( {    
+
+ 	$.ajax( {    
         url:'http://wap.icbc.com.cn/WapDynamicSite/GoldMarket/Default.aspx',  
         type:'get',    
         cache:false, 
@@ -127,214 +384,90 @@ setInterval(function(){
             html = $(html);
             var silver = html.find("#ObjectList1_ctl02_table2");
             var gold = html.find("#ObjectList1_ctl01_table2");
-            var cur_f_silver_price = parseFloat(silver.find("td").eq(1).html());
-           	var cur_f_silver_range = parseFloat(silver.find("td").eq(2).html());
-            var cur_f_gold_price = parseFloat(gold.find("td").eq(1).html());
-            var cur_f_gold_range = parseFloat(gold.find("td").eq(2).html());
+            cur_f_silver_price = parseFloat(silver.find("td").eq(1).html());
+            cur_f_silver_range = parseFloat(silver.find("td").eq(2).html());
+            cur_f_gold_price = parseFloat(gold.find("td").eq(1).html());
+            cur_f_gold_range = parseFloat(gold.find("td").eq(2).html());
 
-            
-			var time = new Date(),
-			h = time.getHours(), // 0-24 format
-			m = time.getMinutes();
-			s = time.getSeconds();
-			time = h+":"+m+":"+s;
-			var messages = [];
-			var item = {};
-			if(localStorage["silver"] == undefined){
-				// do nothing
-			}
-			else
-			{
-				var arr = JSON.parse(localStorage["silver"]);
-				if(arr.length>=1)
-				{
-					
-					for(var i=0;i<arr.length;i++){
-						var obj = arr[i];
-						if(!obj) continue;
-						if(obj.type=="price"){
-							var direction = obj.direction;
-							var deal = obj.deal;
-							var price = parseFloat(obj.price);
-							if(direction == "gt"){
-								if(deal == "in"){
-									if(cur_f_silver_price-getSilverSpread() >= price){
-										item = {title: '['+time+'] 白银价格提醒',message:'白银的银行买入价格￥'+(cur_f_silver_price-getSilverSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
-										messages.push(item);
-										delete arr[i];
-									}
-								}else{
-									if(cur_f_silver_price+getSilverSpread() >= price){
-										item = {title:'['+time+'] 白银价格提醒',message:'白银的银行卖出价格￥'+(cur_f_silver_price+getSilverSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
-										messages.push(item);
-										delete arr[i];
-									}
-								}
-							}
-							else{
-								if(deal == "in"){
-									if(cur_f_silver_price-getSilverSpread() <= price){
-										item = {title:'['+time+'] 白银价格提醒',message:'白银的银行买入价格￥'+(cur_f_silver_price-getSilverSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
-										messages.push(item);
-										delete arr[i];
-									}
-								}else{
-									if(cur_f_silver_price+getSilverSpread() <= price){
-										item = {title:'['+time+'] 白银价格提醒',message:'白银的银行卖出价格￥'+(cur_f_silver_price+getSilverSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price};
-										messages.push(item);
-										delete arr[i];
-									}
-								}
-							}
-						}
-						else{
-							var trend = obj.trend;
-							var range = parseFloat(obj.range);
-							if(trend=="inc"){
-								if(cur_f_silver_range > 0  && cur_f_silver_range >= range){
-									item = {title: '['+time+'] 白银涨幅预警',message:'白银的涨幅 '+cur_f_silver_range.toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) +"%."};
-									messages.push(item);
-									delete arr[i];
-								}
-							}
-							else{
-								if(cur_f_silver_range < 0 && Math.abs(cur_f_silver_range) >= range){
-									item = {title: '['+time+'] 白银跌幅预警',message:'白银的跌幅 '+Math.abs(cur_f_silver_range).toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2)+"%."};
-									messages.push(item);
-									delete arr[i];
-								}
+            var obj1={
+            	type:"silver",
+            	kind:"paper",
+            	price:cur_f_silver_price,
+            	range:cur_f_silver_range
+            }
+           
+            produceNotification(obj1);
 
-							}
-						}
-					}
-					var newarr = [];
-					
-					for(var i=0;i<arr.length;i++){
-						obj = arr[i];
-						if(obj){
-							
-							newarr.push(obj);
-						}
-					}
-					
-					localStorage["silver"] = JSON.stringify(newarr);
-					
-
-				}
-			}
-
-			if(localStorage["gold"] == undefined){
-				// do nothing
-			}
-			else
-			{
-				var arr = JSON.parse(localStorage["gold"]);
-				if(arr.length>=1)
-				{
-					
-					for(var i=0;i<arr.length;i++){
-						var obj = arr[i];
-						if(!obj) continue;
-						if(obj.type=="price"){
-							var direction = obj.direction;
-							var deal = obj.deal;
-							var price = parseFloat(obj.price);
-							
-							if(direction == "gt"){
-								if(deal == "in"){
-									if(cur_f_gold_price-getGoldSpread() >= price){
-										item = {title:'['+time+'] 黄金价格提醒',message:'黄金现在的银行买入价格￥'+(cur_f_gold_price-getGoldSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price}
-										messages.push(item);
-										delete arr[i];
-									}
-								}else{
-									if(cur_f_gold_price+getGoldSpread() >= price){
-										item = {title:'['+time+'] 黄金价格提醒',message:'黄金现在的银行卖出价格￥'+(cur_f_gold_price+getGoldSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price}
-										messages.push(item);
-										delete arr[i];
-									}
-								}
-							}
-							else{
-								if(deal == "in"){
-									if(cur_f_gold_price-getGoldSpread() <= price){
-										item = {title:'['+time+'] 黄金价格提醒',message:'黄金现在的银行买入价格￥'+(cur_f_gold_price-getGoldSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price}
-										messages.push(item);
-										delete arr[i];
-									}
-								}else{
-									if(cur_f_gold_price+getGoldSpread() <= price){
-										item = {title:'['+time+'] 黄金价格提醒',message:'黄金现在的银行卖出价格￥'+(cur_f_gold_price+getGoldSpread()).toFixed(2)+' 已经到达了您所设置的提醒价格￥'+price}
-										messages.push(item);
-										delete arr[i];
-									}
-								}
-							}
-						}
-						else{
-							var trend = obj.trend;
-							var range = parseFloat(obj.range);
-							if(trend=="inc"){
-								if(cur_f_gold_range > 0  && cur_f_gold_range >= range){
-									item = {title: '['+time+'] 黄金涨幅预警',message:'黄金的涨幅 '+cur_f_gold_range.toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) + "%."};
-									messages.push(item);
-									delete arr[i];
-								}
-							}
-							else{
-								if(cur_f_gold_range < 0 && Math.abs(cur_f_gold_range) >= range){
-									item = {title: '['+time+'] 黄金跌幅预警',message:'黄金的跌幅 '+Math.abs(cur_f_gold_range).toFixed(2)+'% 已经到达了您所设置的预警幅度 '+range.toFixed(2) + "%."};
-									messages.push(item);
-									delete arr[i];
-								}
-
-							}
-
-						}
-					}
-					var newarr = [];
-					
-					for(var i=0;i<arr.length;i++){
-						obj = arr[i];
-						if(obj){
-							
-							newarr.push(obj);
-						}
-					}
-					
-					localStorage["gold"] = JSON.stringify(newarr);
-					
-					
-
-				}
-			}
-
-           	
-			if(messages.length){
-				var opt={};
-				for(var i=0;i<messages.length;i++){
-					var opt = {
-							type : "basic",
-							title: messages[i].title,
-							message: messages[i].message,
-							iconUrl:"not.png",
-							buttons: [{ title:'查看实时行情', iconUrl: 'link.png'}],
-						}
-				
-					chrome.notifications.create("metal_price_"+i, opt, function(notID){
-						
-						setTimeout(function(){
-							chrome.notifications.clear(notID,function(res){
-								
-							});
-						},12000)
-					});	
-				}
-				
-			}
+            var obj2={
+            	type:"gold",
+            	kind:"paper",
+            	price:cur_f_gold_price,
+            	range:cur_f_gold_range
+            }
+           
+            produceNotification(obj2);
         },    
         error : function() {    
              
         }    
     });  
-},60000)
+
+ 	$.ajax( {    
+        url:'http://quote.forex.hexun.com/2010/Data/FRunTimeQuote.ashx?code=XAUUSD',  
+        type:'get',    
+        cache:false,     
+		timeout:5000,
+        success:function(data) {    
+            var pattern = /\[(.*)\]/;
+            var str = pattern.exec(data)[1].replace(/'/g,"");
+           
+            var dataArray = str.split(',');
+            
+            cur_f_spot_gold_price = parseFloat(dataArray[2]);
+            cur_f_spot_gold_range = parseFloat(dataArray[4]);
+
+            var obj={
+            	type:"gold",
+            	kind:"spot",
+            	price:cur_f_spot_gold_price,
+            	range:cur_f_spot_gold_range
+            };
+            produceNotification(obj);
+
+        },    
+        error : function() {    
+             // do nothing.
+        }    
+    });  
+
+    $.ajax( {    
+        url:'http://quote.forex.hexun.com/2010/Data/FRunTimeQuote.ashx?code=XAGUSD',  
+        type:'get',    
+        cache:false,     
+		timeout:5000,
+        success:function(data) {    
+            var pattern = /\[(.*)\]/;
+            var str = pattern.exec(data)[1].replace(/'/g,"");
+           
+            var dataArray = str.split(',');
+            
+            cur_f_spot_silver_price = parseFloat(dataArray[2]);
+            cur_f_spot_silver_range = parseFloat(dataArray[4]);
+
+            var obj={
+            	type:"silver",
+            	kind:"spot",
+            	price:cur_f_spot_silver_price,
+            	range:cur_f_spot_silver_range
+            };
+            produceNotification(obj);
+
+        },    
+        error : function() {    
+             // do nothing.
+        }    
+    });  
+
+   
+
+},20000)

@@ -2,7 +2,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <head>
-    <title>工行贵金属报价提醒设置</title>
+    <title>贵金属报价提醒设置</title>
     <link href="options.css" rel="stylesheet" type="text/css">
   </head>
   <body>
@@ -16,15 +16,23 @@
 		  	</table>
 		  	<div class="action">
 		  	添加新价格提醒：当
+		  	<select class="select-price" name="silver-kind">
+			  <option value="paper-silver" selected="selected">纸白银</option>
+			  <option value="spot-silver">现货白银</option>
+			</select> 的
 		  	<div class="inline-group"><input type="radio"  value="in" name="silver-bank"/>银行买入价
 			<input type="radio" name="silver-bank" checked="checked" value="out" />银行卖出价 </div>
 			<div class="inline-group"><input type="radio" value="gt" name="silver-direction"/>大于等于
 			<input type="radio" name="silver-direction"  checked="checked"  value="lt" />小于等于</div>
-			<input type="text" class="price" size="10"></input>时
+			<input type="text" name="silver-price" size="10"></input>时
 			<button class="add" id="add-silver">提醒我</button>
 		  	</div>
 		  	<div class="action">
 		  	添加预警：当
+		  	<select name="trend-silver-kind">
+			  <option value="paper-silver" selected="selected">纸白银</option>
+			  <option value="spot-silver">现货白银</option>
+			</select> 的
 		  	<div class="inline-group"><input type="radio"  value="inc" name="silver-trend"/>当日涨幅
 			<input type="radio" name="silver-trend" checked="checked" value="dec" />当日跌幅 </div>
 			大于
@@ -41,15 +49,23 @@
 			</table>
 			<div class="action">
 		  	添加新提醒：当
+		  	<select class="select-price" name="gold-kind">
+			  <option value="paper-gold" selected="selected">纸黄金</option>
+			  <option value="spot-gold">现货黄金</option>
+			</select> 的
 		  	<div class="inline-group"><input type="radio"  value="in" name="gold-bank"/>银行买入价
 			<input type="radio" name="gold-bank" checked="checked" value="out" />银行卖出价 </div>
 			<div class="inline-group"><input type="radio"  value="gt" name="gold-direction"/>大于等于
 			<input type="radio" name="gold-direction" checked="checked" value="lt" />小于等于</div>
-			<input type="text" class="price" size="10"></input>时
+			<input type="text" name="gold-price" size="10"></input>时
 			<button class="add" id="add-gold">提醒我</button>
 		  	</div>
 		  	<div class="action">
 		  	添加预警：当
+		  	<select name="trend-gold-kind">
+			  <option value="paper-gold" selected="selected">纸黄金</option>
+			  <option value="spot-gold">现货黄金</option>
+			</select> 的
 		  	<div class="inline-group"><input type="radio"  value="inc" name="gold-trend"/>当日涨幅
 			<input type="radio" name="gold-trend" checked="checked" value="dec" />当日跌幅 </div>
 			大于
@@ -57,6 +73,7 @@
 			<button class="add-alert" id="add-gold-rise">提醒我</button>
 		  	</div>
 	  	</div>
+
 	  	<h2>点差设置：</h2>
 	  	<p class="tips">本插件数据来源于工行官方网站，默认点差为工行相关贵金属业务的默认点差，如果您使用其它行的贵金属业务或者您有工行的点差优惠，您可在此设置点差数据</p>
 	  	<div class="spread">

@@ -51,6 +51,10 @@ th {
 	font-weight: normal;
 	text-align: center;
 }
+
+td a{
+	color:#626262;
+}
 #status{
 	display: none;
 }
