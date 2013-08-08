@@ -1,0 +1,34 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="popup.css" />
+<body width="320px;">
+
+	<h2>贵金属报价:</h2><span id="tips">5秒自动刷新!</span>
+	<table  id="info" cellspacing="0" cellpadding="0" width="100%">
+		<tbody>
+		<tr>
+			<th style="width:18%;">品种</th><th>买入价</th><th>卖出价</th><th>今日涨跌</th><th style="width:15%;">走势</th><th style="width:15%;">提醒</th>
+		</tr>
+		<tr id="silver">
+			<th  style="width:18%;">纸白银</th><td>……</td><td>……</td><td>……</td><td><a class="a-graph" href="#silver-graph">查看</a></td><td><a class="a-setting" href="javascript:void(0);" data-type="silver">设置</a></td>
+		</tr>
+		<tr id="gold">
+			<th  style="width:18%;">纸黄金</th><td>……</td><td>……</td><td>……</td><td><a class="a-graph" href="#gold-graph">查看</a></td><td><a class="a-setting"  href="javascript:void(0);" data-type="gold">设置</a></td>
+		</tr>
+		<tr id="spot-silver">
+			<th  style="width:18%;">现货白银</th><td colspan='2'>……</td><td>……</td><td colspan='2'><a class="a-graph" href="#silver-spot">查看走势</a></td>
+		</tr>
+		<tr id="spot-gold">
+			<th  style="width:18%;">现货黄金</th><td colspan='2'>……</td><td>……</td><td colspan='2'><a class="a-graph" href="#gold-spot">查看走势</a></td>
+		</tr>
+		</tbody>
+	</table>
+	
+	<div id="status">
+		<h2>纸白银走势:</h2>
+		<div id="graph"><img src='http://price.zhjtong.com/1_ying_72_320_240.gif' alt='纸白银72小时走势图'/></div>
+	</div>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="popup.js"></script>
+</body>
+</html>

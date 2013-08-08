@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <head>
+    <title>工行贵金属报价提醒设置</title>
+    <link href="options.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+  	<h1>贵金属报价提醒设置</h1>
+  	<div class="main">
+	  	<h2 id="silver-h2">设置白银报价提醒:</h2>
+	  	<div class="silver">
+		  	<table cellspacing="0" cellpadding="0"  class="list">
+		  		<tbody>
+		  		</tbody>
+		  	</table>
+		  	<div class="action">
+		  	添加新价格提醒：当
+		  	<div class="inline-group"><input type="radio"  value="in" name="silver-bank"/>银行买入价
+			<input type="radio" name="silver-bank" checked="checked" value="out" />银行卖出价 </div>
+			<div class="inline-group"><input type="radio" value="gt" name="silver-direction"/>大于等于
+			<input type="radio" name="silver-direction"  checked="checked"  value="lt" />小于等于</div>
+			<input type="text" class="price" size="10"></input>时
+			<button class="add" id="add-silver">提醒我</button>
+		  	</div>
+		  	<div class="action">
+		  	添加预警：当
+		  	<div class="inline-group"><input type="radio"  value="inc" name="silver-trend"/>当日涨幅
+			<input type="radio" name="silver-trend" checked="checked" value="dec" />当日跌幅 </div>
+			大于
+			<input type="text" name="silver-range" size="5"></input>% 时
+			<button class="add-alert" id="add-silver-rise">提醒我</button>
+		  	</div>
+	  	</div>
+
+	  	<h2 id="gold-h2">设置黄金报价提醒:</h2>
+	  	<div class="gold">
+			<table cellspacing="0" cellpadding="0" class="list">
+				<tbody>
+				</tbody>
+			</table>
+			<div class="action">
+		  	添加新提醒：当
+		  	<div class="inline-group"><input type="radio"  value="in" name="gold-bank"/>银行买入价
+			<input type="radio" name="gold-bank" checked="checked" value="out" />银行卖出价 </div>
+			<div class="inline-group"><input type="radio"  value="gt" name="gold-direction"/>大于等于
+			<input type="radio" name="gold-direction" checked="checked" value="lt" />小于等于</div>
+			<input type="text" class="price" size="10"></input>时
+			<button class="add" id="add-gold">提醒我</button>
+		  	</div>
+		  	<div class="action">
+		  	添加预警：当
+		  	<div class="inline-group"><input type="radio"  value="inc" name="gold-trend"/>当日涨幅
+			<input type="radio" name="gold-trend" checked="checked" value="dec" />当日跌幅 </div>
+			大于
+			<input type="text" name="gold-range" size="5"></input>% 时
+			<button class="add-alert" id="add-gold-rise">提醒我</button>
+		  	</div>
+	  	</div>
+	  	<h2>点差设置：</h2>
+	  	<p class="tips">本插件数据来源于工行官方网站，默认点差为工行相关贵金属业务的默认点差，如果您使用其它行的贵金属业务或者您有工行的点差优惠，您可在此设置点差数据</p>
+	  	<div class="spread">
+	  	<p>纸白银点差:<input type="text" value="0.04" name="silver-spread"/></p>
+	  	<p>纸黄金点差:<input type="text" value="0.8" name="gold-spread"/></p>
+	  	<p><button class="set-spread">保存点差设置</button><span id="success-tips"></span></p>
+	  	</div>
+	  	<h2>相关图表：</h2>
+	  	<iframe src="http://quote.zhijinwang.com/app/icbc/zhj24.htm" width="655" height="450" frameborder="0" scrolling="No">
+		</iframe>
+		<h2 class="more-links">相关链接:</h2>
+		<div class="links clearfix">
+		<ul>
+			<li><a href="http://www.icbc.com.cn/ICBC/%E7%BD%91%E4%B8%8A%E9%BB%84%E9%87%91/%E8%A1%8C%E6%83%85%E6%8A%A5%E4%BB%B7/" title="工商银行贵金属实时行情">工行贵金属实时行情</a></li>
+			<li><a href="http://www.zhijinwang.com/‎" title="中国纸金网">中国纸金网</a></li>
+			<li><a href="http://www.zby.in/forum.php" title="纸白银论坛">纸白银论坛</a></li>
+		</ul>
+		</div>
+		<h2 class="contact">联系作者：</h2>
+		<p class="tips">反馈bug或者请求新功能，请发送邮件到shieffan@gmail.com.</p>
+  	</div>
+  	<script src="jquery.js"></script>
+  	<script src="options.js"></script>
+  </body>
+ </html>
