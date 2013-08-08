@@ -136,7 +136,7 @@ function produceNotification(data){
 	
 	var time = getCurtime();
 	var item = {};
-	var time = getCurtime();
+	
 	if(type == "silver" && localStorage["silver"]){
 		var silverArr = JSON.parse(localStorage["silver"]);
 		if(metal_kind == "paper"){
@@ -470,4 +470,4 @@ setInterval(function(){
 
    
 
-},20000)
+},60000)
