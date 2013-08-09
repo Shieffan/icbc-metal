@@ -29,14 +29,16 @@ $("document").ready(function(){
 
 					kind == "paper-silver" ? kind = "当纸白银的" : kind = "当现货白银的"
 					if(deal == "spot"){
-						deal = "成交价"
+						deal = "成交价";
+						price = price + "美元/盎司";
 					}
 					else{
 						deal == "in" ? deal = "银行买入价" : deal = "银行卖出价";
+						price = price + "元/克";
 					}
 					
 					direction == "gt" ? direction="大于等于" : direction="小于等于";
-					$('.silver tbody').append("<tr><td>"+kind+"</td><td>"+ deal +"</td><td>"+direction+"</td><td>￥"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
+					$('.silver tbody').append("<tr><td>"+kind+"</td><td>"+ deal +"</td><td>"+direction+"</td><td>"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
 				}
 				else{
 					var trend = obj.trend;
@@ -73,13 +75,15 @@ $("document").ready(function(){
 					var price = obj.price;
 					kind == "paper-gold" ? kind = "当纸黄金的" : kind = "当现货黄金的"
 					if(deal == "spot"){
-						deal = "成交价"
+						deal = "成交价";
+						price = price + "美元/盎司";
 					}
 					else{
 						deal == "in" ? deal = "银行买入价" : deal = "银行卖出价";
+						price = price + "元/克";
 					}
 					direction == "gt" ? direction="大于等于" : direction="小于等于";
-					$('.gold tbody').append("<tr><td>"+kind+"</td><td>"+ deal +"</td><td>"+direction+"</td><td>￥"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
+					$('.gold tbody').append("<tr><td>"+kind+"</td><td>"+ deal +"</td><td>"+direction+"</td><td>"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
 				}
 				else{
 					var trend = obj.trend;

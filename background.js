@@ -137,7 +137,8 @@ function produceNotification(data){
 	var time = getCurtime();
 	var item = {};
 	
-	if(type == "silver" && localStorage["silver"]){
+	if(type == "silver"){
+		if(!localStorage["silver"])	return;
 		var silverArr = JSON.parse(localStorage["silver"]);
 		if(metal_kind == "paper"){
 			var arr = $.grep(silverArr, function (obj) { return obj.kind == "paper-silver"; });
@@ -241,6 +242,7 @@ function produceNotification(data){
 
 	}
 	else{
+		if(!localStorage["gold"])	return;
 		var goldArr = JSON.parse(localStorage["gold"]);
 		if(metal_kind == "paper"){
 			var arr = $.grep(goldArr, function (obj) { return obj.kind == "paper-gold"; });
