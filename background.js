@@ -61,9 +61,9 @@ function setInfo(el,tips){
            
             var dataArray = str.split(',');
             
-            var cur_f_spot_gold_price = dataArray[2];
+            var cur_f_spot_gold_price = parseFloat(dataArray[2]).toFixed(2);
             if(parseFloat(dataArray[4])>0){
-            	var cur_f_spot_gold_increase = "+" + dataArray[4]
+            	var cur_f_spot_gold_increase = "+" + dataArray[4].replace(/ /g,"");
             }else{
             	var cur_f_spot_gold_increase = dataArray[4];
             }
@@ -88,10 +88,10 @@ function setInfo(el,tips){
            
             var dataArray = str.split(',');
             
-            var cur_f_spot_silver_price = dataArray[2];
+            var cur_f_spot_silver_price = parseFloat(dataArray[2]).toFixed(2);
             
             if(parseFloat(dataArray[4])>0){
-            	var cur_f_spot_silver_increase = "+" + dataArray[4]
+            	var cur_f_spot_silver_increase = "+" + dataArray[4].replace(/ /g,"");
             }else{
             	var cur_f_spot_silver_increase = dataArray[4];
             }

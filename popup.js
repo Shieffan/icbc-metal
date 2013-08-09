@@ -1,11 +1,21 @@
 var background = chrome.extension.getBackgroundPage();
 var info = document.getElementById('info');
 var tips = document.getElementById('tips');
-background.setInfo(info);
+background.setInfo(info,false);
 setInterval(function(){
 	background.setInfo(info,tips);
 },5000);
 $("a.a-graph").click(function(e){
+	e.preventDefault();
+	if($(this).html()=="收起"){
+		$("a.a-graph").html("查看");
+		$("#status").slideUp();
+		return;
+	}
+	if($(this).html()=="查看"){
+		$("a.a-graph").html("查看");
+		$(this).html("收起");
+	}
 	if(e.target.href.indexOf("#silver-graph")!=-1){
 		$("#status").show();
 		$("#status h2").html("纸白银走势:");
