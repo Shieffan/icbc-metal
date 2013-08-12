@@ -18,7 +18,7 @@ h2 {
 	letter-spacing: 0;
 	border-bottom: 1px solid #333;
 	font-weight:normal;
-	margin-top:9px;
+	margin:9px 0 6px 0;
 }
 #status h2{
 	margin:15px 0 13px 0;
@@ -63,7 +63,7 @@ td a{
 	height:250px;
 	display: none;
 	text-align:center;
-	padding-bottom: 10px;
+	padding-bottom: 6px;
 }
 span#tips{
 	color: gray;
