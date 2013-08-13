@@ -128,7 +128,7 @@ $("document").ready(function(){
 			obj.deal = $('input[name="silver-bank"]:checked').val() || 'spot';
 			obj.direction = $('input[name="silver-direction"]:checked').val();
 			
-			obj.price = parseFloat($('input[name="silver-price"]').val());
+			obj.price = parseFloat($('input[name="silver-price"]').val()).toFixed(2);
 			obj.kind = $('select[name="silver-kind"]').val();
 			if(localStorage["silver"] == undefined){
 				var arr = [];
@@ -163,7 +163,7 @@ $("document").ready(function(){
 			obj.id = "gold"+$.now();
 			obj.deal = $('input[name="gold-bank"]:checked').val()|| 'spot';
 			obj.direction = $('input[name="gold-direction"]:checked').val() ;
-			obj.price = parseFloat($('input[name="gold-price"]').val());
+			obj.price = parseFloat($('input[name="gold-price"]').val()).toFixed(2);
 			obj.kind = $('select[name="gold-kind"]').val();
 			if(localStorage["gold"] == undefined){
 				var arr = [];
