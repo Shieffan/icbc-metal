@@ -17,5 +17,5 @@
    "name": "贵金属行情",
    "options_page": "options.html",
    "permissions": [ "http://*.icbc.com.cn/*","http://quote.forex.hexun.com/*","http://chart.icbctd.com/*", "notifications", "tabs" ],
-   "version": "1.0.10"
+   "version": "1.0.12"
 }

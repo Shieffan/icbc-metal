@@ -239,7 +239,7 @@ function produceNotification(data){
 	}
 	else{
 		if(!localStorage["gold"])	return;
-		console.log(data);
+		
 		var arr = JSON.parse(localStorage["gold"]);
 		
 		if(arr.length>=1){
