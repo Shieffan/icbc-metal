@@ -5,93 +5,111 @@ $("document").ready(function(){
 		$("html,body").animate({scrollTop: $(hash).offset().top}, 500);
 	}
 
-	if(localStorage["silver"] == undefined){
+	if(localStorage["paper-silver"] == undefined){
 		// do nothing
 	}
 	else{
-		var arr = JSON.parse(localStorage["silver"]);
-
-		arr.sort(function(a, b){
-			  var akind = a.kind.toLowerCase();
-			  var bkind = b.kind.toLowerCase(); 
-			  return ((akind < bkind) ? -1 : ((akind > bkind) ? 1 : 0));
-			}
-		);
+		var arr = JSON.parse(localStorage["paper-silver"]);
 
 		if(arr.length>=1){
 			for(var i=0;i<arr.length;i++){
 				var obj = arr[i];
 				if(obj.type=="price"){
-					var kind = obj.kind;
 					var deal = obj.deal;
 					var direction = obj.direction;
 					var price = obj.price;
-
-					kind == "paper-silver" ? kind = "当纸白银的" : kind = "当现货白银的"
-					if(deal == "spot"){
-						deal = "成交价";
-						price = price + "美元/盎司";
-					}
-					else{
-						deal == "in" ? deal = "银行买入价" : deal = "银行卖出价";
-						price = price + "元/克";
-					}
-					
+					deal == "in" ? deal = "银行买入价" : deal = "银行卖出价";
+					price = price + "元/克";		
 					direction == "gt" ? direction="大于等于" : direction="小于等于";
-					$('.silver tbody').append("<tr><td>"+kind+"</td><td>"+ deal +"</td><td>"+direction+"</td><td>"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
+					$('.silver tbody').append("<tr><td>当纸白银的</td><td>"+ deal +"</td><td>"+direction+"</td><td>"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
 				}
 				else{
 					var trend = obj.trend;
 					var range = obj.range;
-					var kind = obj.kind;
-					kind == "paper-silver" ? kind = "当纸白银的" : kind = "当现货白银的";
 					trend == "inc" ? trend = "涨幅大于" : trend = "跌幅大于";
-					$('.silver tbody').append("<tr><td>"+kind+"</td><td>"+ trend +"</td><td colspan='2'>"+range+"% 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
+					$('.silver tbody').append("<tr><td>当纸白银的</td><td>"+ trend +"</td><td colspan='2'>"+range+"% 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
 				}
 			}
 		}
 	}
 
-	if(localStorage["gold"] == undefined){
+	if(localStorage["spot-silver"] == undefined){
 		// do nothing
 	}
 	else{
-		var arr = JSON.parse(localStorage["gold"]);
-
-		arr.sort(function(a, b){
-			  var akind = a.kind.toLowerCase();
-			  var bkind = b.kind.toLowerCase(); 
-			  return ((akind < bkind) ? -1 : ((akind > bkind) ? 1 : 0));
-			}
-		);
+		var arr = JSON.parse(localStorage["spot-silver"]);
 
 		if(arr.length>=1){
 			for(var i=0;i<arr.length;i++){
 				var obj = arr[i];
 				if(obj.type=="price"){
-					var kind = obj.kind;
 					var deal = obj.deal;
 					var direction = obj.direction;
 					var price = obj.price;
-					kind == "paper-gold" ? kind = "当纸黄金的" : kind = "当现货黄金的"
-					if(deal == "spot"){
-						deal = "成交价";
-						price = price + "美元/盎司";
-					}
-					else{
-						deal == "in" ? deal = "银行买入价" : deal = "银行卖出价";
-						price = price + "元/克";
-					}
+					price = price + "元/克";		
 					direction == "gt" ? direction="大于等于" : direction="小于等于";
-					$('.gold tbody').append("<tr><td>"+kind+"</td><td>"+ deal +"</td><td>"+direction+"</td><td>"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
+					$('.silver tbody').append("<tr><td>当现货白银的</td><td>成交价</td><td>"+direction+"</td><td>"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
 				}
 				else{
 					var trend = obj.trend;
 					var range = obj.range;
-					var kind = obj.kind;
-					kind == "paper-gold" ? kind = "当纸黄金的" : kind = "当现货黄金的";
 					trend == "inc" ? trend = "涨幅大于" : trend = "跌幅大于";
-					$('.gold tbody').append("<tr><td>"+kind+"</td><td>"+ trend +"</td><td colspan='2'>"+range+"% 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
+					$('.silver tbody').append("<tr><td>当现货白银的</td><td>"+ trend +"</td><td colspan='2'>"+range+"% 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
+				}
+			}
+		}
+	}
+	
+	if(localStorage["paper-gold"] == undefined){
+		// do nothing
+	}
+	else{
+		var arr = JSON.parse(localStorage["paper-gold"]);
+
+		if(arr.length>=1){
+			for(var i=0;i<arr.length;i++){
+				var obj = arr[i];
+				if(obj.type=="price"){
+					var deal = obj.deal;
+					var direction = obj.direction;
+					var price = obj.price;
+					deal == "in" ? deal = "银行买入价" : deal = "银行卖出价";
+					price = price + "元/克";		
+					direction == "gt" ? direction="大于等于" : direction="小于等于";
+					$('.gold tbody').append("<tr><td>当纸黄金的</td><td>"+ deal +"</td><td>"+direction+"</td><td>"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
+				}
+				else{
+					var trend = obj.trend;
+					var range = obj.range;
+					trend == "inc" ? trend = "涨幅大于" : trend = "跌幅大于";
+					$('.gold tbody').append("<tr><td>当纸黄金的</td><td>"+ trend +"</td><td colspan='2'>"+range+"% 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
+				}
+			}
+		}
+	}
+
+	if(localStorage["spot-gold"] == undefined){
+		// do nothing
+	}
+	else{
+		var arr = JSON.parse(localStorage["spot-gold"]);
+
+		if(arr.length>=1){
+			for(var i=0;i<arr.length;i++){
+				var obj = arr[i];
+				if(obj.type=="price"){
+					var deal = obj.deal;
+					var direction = obj.direction;
+					var price = obj.price;
+					price = price + "元/克";		
+					direction == "gt" ? direction="大于等于" : direction="小于等于";
+					$('.gold tbody').append("<tr><td>当现货黄金的</td><td>成交价</td><td>"+direction+"</td><td>"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
+				}
+				else{
+					var trend = obj.trend;
+					var range = obj.range;
+					trend == "inc" ? trend = "涨幅大于" : trend = "跌幅大于";
+					$('.gold tbody').append("<tr><td>当现货黄金的</td><td>"+ trend +"</td><td colspan='2'>"+range+"% 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
 				}
 			}
 		}
@@ -105,17 +123,12 @@ $("document").ready(function(){
 	$("table.list").on('click','a.del',function(e){
 		e.preventDefault();
 		var id = $(this).data('id');
-		if(id.indexOf("silver")!=-1){
-			var arr = JSON.parse(localStorage["silver"]);
-			arr = jQuery.grep(arr, function (obj) { return obj.id != id; });
-			localStorage["silver"] = JSON.stringify(arr);
-		}
-		else{
-			var arr = JSON.parse(localStorage["gold"]);
-			arr = jQuery.grep(arr, function (obj) { return obj.id != id; });
-			localStorage["gold"] = JSON.stringify(arr);
-		}
-
+		var type = id.split('_')[0];
+		
+		var arr = JSON.parse(localStorage[type]);
+		arr = jQuery.grep(arr, function (obj) { return obj.id != id; });
+		localStorage[type] = JSON.stringify(arr);
+		
 		$(this).parent().parent().remove();
 		return false;
 	});
@@ -124,74 +137,79 @@ $("document").ready(function(){
 		var obj = {}
 		obj.type="price";
 		if(e.target.id=="add-silver"){
-			obj.id = "silver"+$.now();
-			obj.deal = $('input[name="silver-bank"]:checked').val() || 'spot';
-			obj.direction = $('input[name="silver-direction"]:checked').val();
-			
 			obj.price = parseFloat($('input[name="silver-price"]').val()).toFixed(2);
-			obj.kind = $('select[name="silver-kind"]').val();
-			if(localStorage["silver"] == undefined){
+			kind = $('select[name="silver-kind"]').val();
+			obj.id = kind + "_" + $.now();
+			obj.direction = $('input[name="silver-direction"]:checked').val();
+
+			if($('select[name="silver-kind"]').val()=="paper-silver"){
+				obj.deal = $('input[name="silver-bank"]:checked').val();
+
+			}
+			
+			if(localStorage[kind] == undefined){
 				var arr = [];
 				arr.push(obj);
-				localStorage["silver"] = JSON.stringify(arr);
+				localStorage[kind] = JSON.stringify(arr);
 			}
 			else{
-				var arr = JSON.parse(localStorage["silver"]);
+				var arr = JSON.parse(localStorage[kind]);
 				arr.push(obj);
-				localStorage["silver"] = JSON.stringify(arr);
+				localStorage[kind] = JSON.stringify(arr);
 			}
 			
-			
-			var deal,direction,kind,price;
+			var deal,direction,price;
 
-			obj.kind=="paper-silver" ? kind = "当纸白银的": kind = "当现货白银的";
-			if(obj.deal == 'spot'){
-				deal = "成交价";
-				price = parseFloat(obj.price).toFixed(2) + "美元/盎司";
-			}
-			else{
+			kind=="paper-silver" ? kind = "当纸白银的": kind = "当现货白银的";
+			if(obj.deal){
 				obj.deal == "in" ? deal = "银行买入价" : deal = "银行卖出价";
 				price = parseFloat(obj.price).toFixed(2) + "元/克";
 			}
-
+			else{
+				deal = "成交价";
+				price = parseFloat(obj.price).toFixed(2) + "美元/盎司";
+			}
 			obj.direction == "gt" ? direction="大于等于" : direction="小于等于";
 			$('.silver tbody').append("<tr><td>"+kind+"</td><td>"+ deal +"</td><td>"+direction+"</td><td>"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
-		
-			
 		}
 		else{
-			obj.id = "gold"+$.now();
-			obj.deal = $('input[name="gold-bank"]:checked').val()|| 'spot';
-			obj.direction = $('input[name="gold-direction"]:checked').val() ;
 			obj.price = parseFloat($('input[name="gold-price"]').val()).toFixed(2);
-			obj.kind = $('select[name="gold-kind"]').val();
-			if(localStorage["gold"] == undefined){
+			var kind = $('select[name="gold-kind"]').val();
+			obj.id = kind + "_" + $.now();
+			obj.direction = $('input[name="gold-direction"]:checked').val();
+
+			if($('select[name="gold-kind"]').val()=="paper-gold"){
+				obj.deal = $('input[name="gold-bank"]:checked').val();
+
+			}
+
+			
+			if(localStorage[kind] == undefined){
 				var arr = [];
 				arr.push(obj);
-				localStorage["gold"] = JSON.stringify(arr);
+				localStorage[kind] = JSON.stringify(arr);
 			}
 			else{
-				var arr = JSON.parse(localStorage["gold"]);
+				var arr = JSON.parse(localStorage[kind]);
 				arr.push(obj);
-				localStorage["gold"] = JSON.stringify(arr);
+				localStorage[kind] = JSON.stringify(arr);
 			}
 			
-			var deal,direction,kind,price;
-			obj.kind=="paper-gold" ? kind = "当纸黄金的": kind = "当现货黄金的";
 			
-			if(obj.deal == 'spot'){
-				deal = "成交价";
-				price = parseFloat(obj.price).toFixed(2) + "美元/盎司";
-			}
-			else{
+			var deal,direction,price;
+
+			kind=="paper-gold" ? kind = "当纸黄金的": kind = "当现货黄金的";
+			if(obj.deal){
 				obj.deal == "in" ? deal = "银行买入价" : deal = "银行卖出价";
 				price = parseFloat(obj.price).toFixed(2) + "元/克";
+			}
+			else{
+				deal = "成交价";
+				price = parseFloat(obj.price).toFixed(2) + "美元/盎司";
 			}
 
 			obj.direction == "gt" ? direction="大于等于" : direction="小于等于";
 			$('.gold tbody').append("<tr><td>"+kind+"</td><td>"+ deal +"</td><td>"+direction+"</td><td>"+price+" 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
-
-			
 		}
 	});
 
@@ -199,25 +217,26 @@ $("document").ready(function(){
 		var obj = {}
 		obj.type="rise";
 		if(e.target.id=="add-silver-rise"){
-			obj.id = "silver"+$.now();
+			
 			obj.trend = $('input[name="silver-trend"]:checked').val();
 			obj.range = parseFloat($('input[name="silver-range"]').val()).toFixed(2);
-			obj.kind = $('select[name="trend-silver-kind"]').val();
-			if(localStorage["silver"] == undefined){
+			var kind = $('select[name="trend-silver-kind"]').val();
+			obj.id = kind + "_" + $.now();
+			if(localStorage[kind] == undefined){
 				var arr = [];
 				arr.push(obj);
-				localStorage["silver"] = JSON.stringify(arr);
+				localStorage[kind] = JSON.stringify(arr);
 			}
 			else{
-				var arr = JSON.parse(localStorage["silver"]);
+				var arr = JSON.parse(localStorage[kind]);
 				arr.push(obj);
-				localStorage["silver"] = JSON.stringify(arr);
+				localStorage[kind] = JSON.stringify(arr);
 			}
 			
 			var trend = obj.trend;
-			var kind;
+			
 
-			if(obj.kind == "paper-silver"){
+			if(kind == "paper-silver"){
 				var range = parseFloat(obj.range).toFixed(2);
 				kind = "当纸白银的";
 			}else{
@@ -230,24 +249,25 @@ $("document").ready(function(){
 			$('.silver tbody').append("<tr><td>"+kind+"</td><td>"+ trend +"</td><td colspan='2'>"+range+"% 时提醒我.</td><th><a  data-id='"+obj.id+"' class='del' href='#'>删除此提醒</a></th></tr>");
 		}
 		else{
-			obj.id = "gold"+$.now();
+			
 			obj.trend = $('input[name="gold-trend"]:checked').val();
 			obj.range = parseFloat($('input[name="gold-range"]').val()).toFixed(2);
-			obj.kind = $('select[name="trend-gold-kind"]').val();
-			if(localStorage["gold"] == undefined){
+			var kind = $('select[name="trend-gold-kind"]').val();
+			obj.id = kind + "_" + $.now();
+			if(localStorage[kind] == undefined){
 				var arr = [];
 				arr.push(obj);
-				localStorage["gold"] = JSON.stringify(arr);
+				localStorage[kind] = JSON.stringify(arr);
 			}
 			else{
-				var arr = JSON.parse(localStorage["gold"]);
+				var arr = JSON.parse(localStorage[kind]);
 				arr.push(obj);
-				localStorage["gold"] = JSON.stringify(arr);
+				localStorage[kind] = JSON.stringify(arr);
 			}
 			
 			var trend = obj.trend;
-			var kind;
-			if(obj.kind == "paper-gold"){
+			
+			if(kind == "paper-gold"){
 				var range = parseFloat(obj.range).toFixed(2);
 				kind = "当纸黄金的";
 				trend == "inc" ? trend = "涨幅大于" : trend = "跌幅大于";
