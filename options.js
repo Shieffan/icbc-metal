@@ -201,7 +201,7 @@ $("document").ready(function(){
 		if(e.target.id=="add-silver-rise"){
 			obj.id = "silver"+$.now();
 			obj.trend = $('input[name="silver-trend"]:checked').val();
-			obj.range = parseFloat($('input[name="silver-range"]').val());
+			obj.range = parseFloat($('input[name="silver-range"]').val()).toFixed(2);
 			obj.kind = $('select[name="trend-silver-kind"]').val();
 			if(localStorage["silver"] == undefined){
 				var arr = [];
@@ -232,7 +232,7 @@ $("document").ready(function(){
 		else{
 			obj.id = "gold"+$.now();
 			obj.trend = $('input[name="gold-trend"]:checked').val();
-			obj.range = parseFloat($('input[name="gold-range"]').val());
+			obj.range = parseFloat($('input[name="gold-range"]').val()).toFixed(2);
 			obj.kind = $('select[name="trend-gold-kind"]').val();
 			if(localStorage["gold"] == undefined){
 				var arr = [];
